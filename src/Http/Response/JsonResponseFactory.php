@@ -42,7 +42,7 @@ class JsonResponseFactory implements ResponseFactoryInterface
      *
      * @return ResponseInterface
      */
-    public function success($payload = null, int $jsonOptions = null)
+    public function success($payload = null, int $jsonOptions = null): ResponseInterface
     {
         return $this->withPayload(
             $this->makeResponse(),
@@ -56,7 +56,7 @@ class JsonResponseFactory implements ResponseFactoryInterface
      *
      * @return ResponseInterface
      */
-    public function error(int $code)
+    public function error(int $code): ResponseInterface
     {
         return $this->makeResponse($code);
     }
@@ -88,7 +88,7 @@ class JsonResponseFactory implements ResponseFactoryInterface
      *
      * @return ResponseInterface
      */
-    private function makeResponse(int $code = 200, string $reasonPhrase = '')
+    private function makeResponse(int $code = 200, string $reasonPhrase = ''): ResponseInterface
     {
         return (new Response)
             ->withStatus($code, $reasonPhrase)

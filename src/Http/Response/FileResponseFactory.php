@@ -44,8 +44,11 @@ class FileResponseFactory implements ResponseFactoryInterface
      *
      * @return ResponseInterface
      */
-    public function streamFrom($resource, bool $download = false, string $filename = null)
-    {
+    public function streamFrom(
+        $resource,
+        bool $download = false,
+        string $filename = null
+    ): ResponseInterface {
         $stream = new Stream($resource);
         $response = $this->makeResponse()->withBody($stream);
         
@@ -78,7 +81,7 @@ class FileResponseFactory implements ResponseFactoryInterface
      *
      * @return ResponseInterface
      */
-    public function error(int $code, string $reasonPhrase = '')
+    public function error(int $code, string $reasonPhrase = ''): ResponseInterface
     {
         return $this->makeResponse($code, $reasonPhrase);
     }

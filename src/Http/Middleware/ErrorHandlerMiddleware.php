@@ -39,7 +39,7 @@ class ErrorHandlerMiddleware implements MiddlewareInterface, LoggerAwareInterfac
     
     /**
      * @param ResponseFactoryInterface $factory
-     * @param array                    $contentTypes
+     * @param array|null               $contentTypes
      */
     public function __construct(ResponseFactoryInterface $factory, array $contentTypes = null)
     {

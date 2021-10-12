@@ -103,7 +103,7 @@ class TemplatedResponseFactory implements ResponseFactoryInterface
         ResponseInterface $response,
         string $templateName,
         array $templateParams = []
-    ) {
+    ): ResponseInterface {
         $response->getBody()->write(
             $this->renderer->render($templateName, $templateParams)
         );
@@ -116,7 +116,7 @@ class TemplatedResponseFactory implements ResponseFactoryInterface
      *
      * @return bool
      */
-    private function isSuccessCode(int $code)
+    private function isSuccessCode(int $code): bool
     {
         return $code < 305;
     }
