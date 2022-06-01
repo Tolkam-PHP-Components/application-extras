@@ -16,7 +16,7 @@ class FileResponseFactory implements ResponseFactoryInterface
         // filename safe characters pattern
         'safeCharacters' => '\p{Cyrillic}\p{Latin}_\S\-',
     ];
-    
+
     /**
      * @param array|null $options
      */
@@ -26,7 +26,7 @@ class FileResponseFactory implements ResponseFactoryInterface
             $this->options = array_replace($this->options, $options);
         }
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -36,7 +36,7 @@ class FileResponseFactory implements ResponseFactoryInterface
     ): ResponseInterface {
         return $this->makeResponse($code, $reasonPhrase);
     }
-    
+
     /**
      * @param             $resource
      * @param bool        $download
@@ -51,12 +51,12 @@ class FileResponseFactory implements ResponseFactoryInterface
     ): ResponseInterface {
         $stream = new Stream($resource);
         $response = $this->makeResponse()->withBody($stream);
-        
+
         if ($download) {
             $filename = $this->sanitizeFilename(
                 $filename ?? basename($stream->getMetadata('uri'))
             );
-            
+
             $response = $response
                 ->withHeader(
                     'Cache-Control',
@@ -71,10 +71,10 @@ class FileResponseFactory implements ResponseFactoryInterface
                     'attachment; filename="' . $filename . '"'
                 );
         }
-        
+
         return $response;
     }
-    
+
     /**
      * @param int    $code
      * @param string $reasonPhrase
@@ -85,7 +85,7 @@ class FileResponseFactory implements ResponseFactoryInterface
     {
         return $this->makeResponse($code, $reasonPhrase);
     }
-    
+
     /**
      * @param int    $code
      * @param string $reasonPhrase
@@ -96,9 +96,9 @@ class FileResponseFactory implements ResponseFactoryInterface
         int $code = 200,
         string $reasonPhrase = ''
     ): ResponseInterface {
-        return (new Response)->withStatus($code, $reasonPhrase);
+        return (new Response())->withStatus($code, $reasonPhrase);
     }
-    
+
     /**
      * @param string $filename
      *

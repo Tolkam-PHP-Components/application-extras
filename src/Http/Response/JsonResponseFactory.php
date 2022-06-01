@@ -17,7 +17,7 @@ class JsonResponseFactory implements ResponseFactoryInterface
             | JSON_UNESCAPED_UNICODE
             | JSON_THROW_ON_ERROR,
     ];
-    
+
     /**
      * @param array|null $options
      */
@@ -27,7 +27,7 @@ class JsonResponseFactory implements ResponseFactoryInterface
             $this->options = array_replace($this->options, $options);
         }
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -35,7 +35,7 @@ class JsonResponseFactory implements ResponseFactoryInterface
     {
         return $this->makeResponse($code, $reasonPhrase);
     }
-    
+
     /**
      * @param null     $payload
      * @param int|null $jsonOptions
@@ -50,7 +50,7 @@ class JsonResponseFactory implements ResponseFactoryInterface
             $jsonOptions
         );
     }
-    
+
     /**
      * @param int $code
      *
@@ -60,7 +60,7 @@ class JsonResponseFactory implements ResponseFactoryInterface
     {
         return $this->makeResponse($code);
     }
-    
+
     /**
      * @param ResponseInterface $response
      * @param                   $payload
@@ -74,14 +74,14 @@ class JsonResponseFactory implements ResponseFactoryInterface
         int $jsonOptions = null
     ): ResponseInterface {
         $jsonOptions = $jsonOptions ?? (int) $this->options['jsonOptions'];
-        
+
         $response
             ->getBody()
             ->write(json_encode($payload, $jsonOptions));
-        
+
         return $response;
     }
-    
+
     /**
      * @param int    $code
      * @param string $reasonPhrase
@@ -90,7 +90,7 @@ class JsonResponseFactory implements ResponseFactoryInterface
      */
     private function makeResponse(int $code = 200, string $reasonPhrase = ''): ResponseInterface
     {
-        return (new Response)
+        return (new Response())
             ->withStatus($code, $reasonPhrase)
             ->withHeader('Content-Type', (string) $this->options['contentType']);
     }

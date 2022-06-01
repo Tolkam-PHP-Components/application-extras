@@ -13,7 +13,7 @@ class TemplatedResponseFactory implements ResponseFactoryInterface
      * @var RendererInterface
      */
     protected RendererInterface $renderer;
-    
+
     /**
      * @var array
      */
@@ -21,7 +21,7 @@ class TemplatedResponseFactory implements ResponseFactoryInterface
         'contentType' => 'text/html;charset=utf-8',
         'errorTemplate' => '@errors/common',
     ];
-    
+
     /**
      * @param RendererInterface $renderer
      * @param array|null        $options
@@ -29,12 +29,12 @@ class TemplatedResponseFactory implements ResponseFactoryInterface
     public function __construct(RendererInterface $renderer, array $options = null)
     {
         $this->renderer = $renderer;
-        
+
         if ($options) {
             $this->options = array_replace($this->options, $options);
         }
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -45,10 +45,10 @@ class TemplatedResponseFactory implements ResponseFactoryInterface
         if (!$this->isSuccessCode($code)) {
             return $this->error($code, $reasonPhrase);
         }
-        
+
         return $this->makeResponse($code, $reasonPhrase);
     }
-    
+
     /**
      * @param string $templateName
      * @param array  $templateParams
@@ -63,7 +63,7 @@ class TemplatedResponseFactory implements ResponseFactoryInterface
             $templateParams
         );
     }
-    
+
     /**
      * @param int    $code
      * @param string $reasonPhrase
@@ -78,7 +78,7 @@ class TemplatedResponseFactory implements ResponseFactoryInterface
             ['statusCode' => $code]
         );
     }
-    
+
     /**
      * @param int    $code
      * @param string $reasonPhrase
@@ -87,11 +87,11 @@ class TemplatedResponseFactory implements ResponseFactoryInterface
      */
     private function makeResponse(int $code, string $reasonPhrase = '')
     {
-        return (new Response)
+        return (new Response())
             ->withStatus($code, $reasonPhrase)
             ->withHeader('Content-Type', (string) $this->options['contentType']);
     }
-    
+
     /**
      * @param ResponseInterface $response
      * @param string            $templateName
@@ -107,10 +107,10 @@ class TemplatedResponseFactory implements ResponseFactoryInterface
         $response->getBody()->write(
             $this->renderer->render($templateName, $templateParams)
         );
-        
+
         return $response;
     }
-    
+
     /**
      * @param int $code
      *
