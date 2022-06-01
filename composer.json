@@ -19,7 +19,7 @@
         "php": ">=7.4",
         "ext-json": "*",
         "laminas/laminas-diactoros": "^2.5",
-        "tolkam/utils": "^1.0@dev",
+        "tolkam/utils": "^1.0",
         "tolkam/application": "^1.0",
         "tolkam/routing": "^1.0",
         "tolkam/template": "^1.0"
