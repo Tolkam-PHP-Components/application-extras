@@ -34,12 +34,12 @@ class LastResortMiddleware implements MiddlewareInterface, LoggerAwareInterface
     private array $throwableHandlers = [];
 
     /**
-     * @param ResponseFactoryInterface $factory
+     * @param ResponseFactoryInterface $defaultResponseFactory
      * @param array|null               $contentTypes
      */
-    public function __construct(ResponseFactoryInterface $factory, array $contentTypes = null)
+    public function __construct(ResponseFactoryInterface $defaultResponseFactory, array $contentTypes = null)
     {
-        $this->responseFactory = $factory;
+        $this->responseFactory = $defaultResponseFactory;
         $this->contentTypes = $contentTypes;
     }
 
@@ -90,6 +90,34 @@ class LastResortMiddleware implements MiddlewareInterface, LoggerAwareInterface
         }
 
         return $response;
+    }
+
+    /**
+     * Sets the response factory
+     *
+     * @param ResponseFactoryInterface $responseFactory
+     *
+     * @return self
+     */
+    public function setResponseFactory(ResponseFactoryInterface $responseFactory): self
+    {
+        $this->responseFactory = $responseFactory;
+
+        return $this;
+    }
+
+    /**
+     * Sets the content types
+     *
+     * @param array|null $contentTypes
+     *
+     * @return self
+     */
+    public function setContentTypes(?array $contentTypes): self
+    {
+        $this->contentTypes = $contentTypes;
+
+        return $this;
     }
 
     /**
