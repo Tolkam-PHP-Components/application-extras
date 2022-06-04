@@ -2,7 +2,6 @@
 
 namespace Tolkam\Application\Extras\Http\Middleware\LastResort\Handler;
 
-use Psr\Http\Message\ResponseInterface;
 use Throwable;
 use Tolkam\Application\Extras\Http\Middleware\LastResort\HandlerInterface;
 use Tolkam\Application\Http\HttpException;
@@ -28,15 +27,27 @@ class HttpExceptionHandler implements HandlerInterface
     /**
      * @inheritDoc
      */
-    public function handle(Throwable $t, ResponseInterface $response): ResponseInterface
+    public function getStatusCode(Throwable $t): int
     {
         /** @type HttpException $t */
-        $response = $response->withStatus($t->getCode(), $t->getMessage());
+        return $t->getCode();
+    }
 
-        foreach ($t->getHeaders() as $name => $value) {
-            $response = $response->withHeader($name, $value);
-        }
+    /**
+     * @inheritDoc
+     */
+    public function getReasonPhrase(Throwable $t): ?string
+    {
+        /** @type HttpException $t */
+        return $t->getMessage();
+    }
 
-        return $response;
+    /**
+     * @inheritDoc
+     */
+    public function getHeaders(Throwable $t): ?array
+    {
+        /** @type HttpException $t */
+        return $t->getHeaders();
     }
 }

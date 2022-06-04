@@ -2,7 +2,6 @@
 
 namespace Tolkam\Application\Extras\Http\Middleware\LastResort;
 
-use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
 interface HandlerInterface
@@ -22,10 +21,23 @@ interface HandlerInterface
     public function shouldLog(Throwable $t): bool;
 
     /**
-     * @param Throwable         $t
-     * @param ResponseInterface $response
+     * @param Throwable $t
      *
-     * @return ResponseInterface
+     * @return int
      */
-    public function handle(Throwable $t, ResponseInterface $response): ResponseInterface;
+    public function getStatusCode(Throwable $t): int;
+
+    /**
+     * @param Throwable $t
+     *
+     * @return string|null
+     */
+    public function getReasonPhrase(Throwable $t): ?string;
+
+    /**
+     * @param Throwable $t
+     *
+     * @return array|null
+     */
+    public function getHeaders(Throwable $t): ?array;
 }

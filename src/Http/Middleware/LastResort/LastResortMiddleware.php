@@ -76,7 +76,17 @@ class LastResortMiddleware implements MiddlewareInterface, LoggerAwareInterface
                     continue;
                 }
 
-                $response = $throwableHandler->handle($t, $response);
+                $response = $this->responseFactory->createResponse(
+                    $throwableHandler->getStatusCode($t),
+                    $throwableHandler->getReasonPhrase($t) ?? '',
+                );
+
+                if ($headers = $throwableHandler->getHeaders($t)) {
+                    foreach ($headers as $k => $v) {
+                        $response = $response->withHeader($k, $v);
+                    }
+                }
+
                 if ($throwableHandler->shouldLog($t)) {
                     $this->log($t);
                 }
